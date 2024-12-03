@@ -49,7 +49,7 @@ jobs:
     - name: Upload a Build Artifact         # ação de salvar o arquivo compilado como artefato para passar pro job docker
       uses: actions/upload-artifact@v4.4.3
       with:
-        name: programa go       # informar qualquer nome relacionado a descrição da aplicação
+        name: programago       # informar qualquer nome relacionado a descrição da aplicação
         path: main              # iremos salvar o arquivo main
         
   docker:                         # inserir a tarefa para criação do docker image
