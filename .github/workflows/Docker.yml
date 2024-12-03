@@ -18,6 +18,12 @@ jobs:
       with:
         username: thzuccoli
         password: ${{ secrets.PASSWORD_DOCKER_HUB }}       # password armazenado como secret no github secrets
+
+    - name: Upload a Build Artifact         # ação de salvar o arquivo compilado 
+      uses: actions/upload-artifact@v4.4.3
+      with:
+        name: programa go       # informar qualquer nome relacionado a descrição da aplicação
+        path: main              # iremos salvar o arquivo main
       
     - name: Build and push Docker images             # execução do docker build e docker push
       uses: docker/build-push-action@v6.10.0
