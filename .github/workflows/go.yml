@@ -12,7 +12,7 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-        env:
+      env:
       HOST: localhost
       PORT: 5432
       USER: root
