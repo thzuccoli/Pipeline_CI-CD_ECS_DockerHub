@@ -40,16 +40,19 @@ jobs:
   
   build:
     needs: test
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: ['ubuntu-latest', 'ubuntu-22.04']
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: Build
       run: go build -v main.go
 
-  docker:                         # inserir a tarefa para criação do container docker
+    - name: Upload a Build Artifact         # ação de salvar o arquivo compilado como artefato para passar pro job docker
+      uses: actions/upload-artifact@v4.4.3
+      with:
+        name: programa go       # informar qualquer nome relacionado a descrição da aplicação
+        path: main              # iremos salvar o arquivo main
+        
+  docker:                         # inserir a tarefa para criação do docker image
     needs: build                  # execução do job docker somente após o build
     uses: ./.github/workflows/Docker.yml              # acionamento da rotina do arquivo docker.yml
     secrets: inherit	                    # defini a utilização de secrets no arquivo Docker.yml
