@@ -9,10 +9,11 @@ on:
 jobs:
 
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}     #  estrategia para execução em diversos tipos de OS
     strategy:
       matrix:
-        go_version: ['1.18', '1.17', '>=1.18']
+        go_version: ['1.18', '1.17']
+        os: ['ubuntu-latest', 'ubuntu-22.04']     # definindo os SO a ser executado o job test
     steps:
     - uses: actions/checkout@v3
 
