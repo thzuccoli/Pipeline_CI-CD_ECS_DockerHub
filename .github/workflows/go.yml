@@ -2,9 +2,9 @@ name: Go
 
 on:
   push:
-    branches: [ Aula_1 ]
+    branches: [ '*' ]           # inserir * para realizar a rotina caso haja push em qualquer branch
   pull_request:
-    branches: [ Aula_1 ]
+    branches: [ '*' ]           # inserir * para realizar a rotina caso haja pull request em qualquer branch
 
 jobs:
 
