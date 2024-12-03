@@ -12,7 +12,7 @@ jobs:
     runs-on: ${{ matrix.os }}     #  estrategia para execução em diversos tipos de OS
     env:                          # informar as variaveis de ambiente para conexão no banco dados para realizar o job teste
       HOST: localhost
-      PORT: 5432
+      DBPORT: 5432
       USER: root
       PASSWORD: root
       DBNAME: root
