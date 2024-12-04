@@ -30,4 +30,4 @@ jobs:
         context: .   # onde irá executar o build
         file: ./Dockerfile      # caminho do dockerfile com o arquivo (esta no diretorio raiz)
         push: true           # colocar a imagem em algum repositorio (no caso no docker hub)
-        tags: thzuccoli/go_ci:${{ github.sha }}
+        tags: thzuccoli/go_ci:${{ github.ref }}
