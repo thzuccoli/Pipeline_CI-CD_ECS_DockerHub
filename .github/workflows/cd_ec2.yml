@@ -1,0 +1,28 @@
+name: Deploy_EC2
+
+on:
+  workflow_call:            # execução na chamada da rotina go.yml
+ 
+jobs:
+
+  Deploy_EC2:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3      # # arquivos estatico da nossa aplicação
+
+    - name: Upload a Build Artifact         # ação de salvar o arquivo compilado 
+      uses: actions/upload-artifact@v4.4.3
+      with:
+        name: programago       # informar qualquer nome relacionado a descrição da aplicação  
+        path: maingo
+      
+    - name: Deploy to Staging server             # step para conectar via ssh e realizar o deploy
+      uses: easingthemes/ssh-deploy@main
+      with:  
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}     # chave SSH para acesso
+        REMOTE_HOST: ${{ secrets.REMOTE_HOST }}             # IP maquina que queremos realizar o deploy
+        REMOTE_USER: ${{ secrets.REMOTE_USER }}             # Usuario para loguin referente ao acesso e deploy AWS
+        TARGET: /home/${{ secrets.REMOTE_USER }}            # Diretorio que irá ser realizado o deploy no EC2
+        EXCLUDE: "postgres-data"         # não enviar arquivos do banco de dados de testes, iremos testar a rotina, e não a aplicação
+       
+  
