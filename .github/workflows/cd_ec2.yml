@@ -24,5 +24,20 @@ jobs:
         REMOTE_USER: ${{ secrets.REMOTE_USER }}             # Usuario para loguin referente ao acesso e deploy AWS
         TARGET: /home/${{ secrets.REMOTE_USER }}            # Diretorio que irá ser realizado o deploy no EC2
         EXCLUDE: "postgres-data"         # não enviar arquivos do banco de dados de testes, iremos testar a rotina, e não a aplicação
-       
+
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@v1.2.0
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        Key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22                                            # porta do acesso SSH
+        script: |            # local onde iremos colocar nosso codigo (simbolo | significa script com varias linhas)
+          export HOST=${{ secrets.DBHOST }}
+          export USER=${{ secrets.DBUSER }} 
+          export PASSWORD=${{ secrets.DBPASSWORD }}
+          export DBNAME=${{ secrets.DBNAME }}
+          export PORT=${{ secrets.DBPORT }}
+        # export pega o valor na frente dele e cria uma variavel de ambiente
+
   
