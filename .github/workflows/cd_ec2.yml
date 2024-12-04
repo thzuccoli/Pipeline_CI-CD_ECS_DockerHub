@@ -10,8 +10,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3      # arquivos estatico da nossa aplicação
 
-    - name: Upload a Build Artifact         # ação de salvar o arquivo compilado 
-      uses: actions/upload-artifact@v4.4.3
+    - name: Download a Build Artifact         # ação de salvar o arquivo compilado 
+      uses: actions/download-artifact@v4.1.8
       with:
         name: programago       # informar qualquer nome relacionado a descrição da aplicação  
       
@@ -38,8 +38,12 @@ jobs:
           export DBNAME=${{ secrets.DBNAME_RDS }}
           export DBPORT=${{ secrets.DBPORT_RDS }}
           export PORT=8000
+          chmod +x main
+          nohup ./main &
         # export pega o valor na frente dele e cria uma variavel de ambiente (info para conexao no banco RDS)
         # ultimo export PORT=8000 significa a porta em que a aplicação irá executar, sendo que n precisa estar em secret devido a termos que passar ao cliente
-        
+        # comando para permissionamento da aplicação main
+        # nohup comando para não finalizar a sessão  quando sair do ssh 
+        # comando & para rodar em segundo plano 
 
   
