@@ -8,7 +8,7 @@ jobs:
   Deploy_EC2:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3      # # arquivos estatico da nossa aplicação
+    - uses: actions/checkout@v3      # arquivos estatico da nossa aplicação
 
     - name: Upload a Build Artifact         # ação de salvar o arquivo compilado 
       uses: actions/upload-artifact@v4.4.3
@@ -38,6 +38,7 @@ jobs:
           export PASSWORD=${{ secrets.DBPASSWORD_RDS }}
           export DBNAME=${{ secrets.DBNAME_RDS }}
           export PORT=${{ secrets.DBPORT_RDS }}
-        # export pega o valor na frente dele e cria uma variavel de ambiente
+        # export pega o valor na frente dele e cria uma variavel de ambiente (info para conexao no banco RDS)
+        
 
   
