@@ -39,11 +39,14 @@ jobs:
           export DBPORT=${{ secrets.DBPORT_RDS }}
           export PORT=8000
           chmod +x main
-          nohup ./main &
+          nohup ./main > nohup.out 2> nohup.err < /dev/null &
         # export pega o valor na frente dele e cria uma variavel de ambiente (info para conexao no banco RDS)
         # ultimo export PORT=8000 significa a porta em que a aplicação irá executar, sendo que n precisa estar em secret devido a termos que passar ao cliente
         # comando para permissionamento da aplicação main
-        # nohup comando para não finalizar a sessão  quando sair do ssh 
+        # nohup comando para não finalizar a sessão  quando sair do ssh
+        # nohup.out redirecionamento das saidas para o arquivo nohup.out
+        # 2> nohup.err redirecionamento dos erros para o arquivo nohup.err
+        # /dev/null caso haja a necessidade de uma entrada, ira apresentar um null para n trava-la
         # comando & para rodar em segundo plano 
 
   
