@@ -37,8 +37,10 @@ jobs:
           export USER=${{ secrets.DBUSER_RDS }} 
           export PASSWORD=${{ secrets.DBPASSWORD_RDS }}
           export DBNAME=${{ secrets.DBNAME_RDS }}
-          export PORT=${{ secrets.DBPORT_RDS }}
+          export DBPORT=${{ secrets.DBPORT_RDS }}
+          export PORT=8000
         # export pega o valor na frente dele e cria uma variavel de ambiente (info para conexao no banco RDS)
+        # ultimo export PORT=8000 significa a porta em que a aplicação irá executar, sendo que n precisa estar em secret devido a termos que passar ao cliente
         
 
   
