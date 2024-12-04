@@ -33,11 +33,11 @@ jobs:
         Key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22                                            # porta do acesso SSH
         script: |            # local onde iremos colocar nosso codigo (simbolo | significa script com varias linhas)
-          export HOST=${{ secrets.DBHOST }}
-          export USER=${{ secrets.DBUSER }} 
-          export PASSWORD=${{ secrets.DBPASSWORD }}
-          export DBNAME=${{ secrets.DBNAME }}
-          export PORT=${{ secrets.DBPORT }}
+          export HOST=${{ secrets.DBHOST_RDS }}
+          export USER=${{ secrets.DBUSER_RDS }} 
+          export PASSWORD=${{ secrets.DBPASSWORD_RDS }}
+          export DBNAME=${{ secrets.DBNAME_RDS }}
+          export PORT=${{ secrets.DBPORT_RDS }}
         # export pega o valor na frente dele e cria uma variavel de ambiente
 
   
