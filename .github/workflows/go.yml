@@ -50,7 +50,7 @@ jobs:
       uses: actions/upload-artifact@v4.4.3
       with:
         name: programago       # informar qualquer nome relacionado a descrição da aplicação
-        path: maingo              # iremos salvar o arquivo main
+        path: main              # iremos salvar o arquivo main
         
   docker:                         # inserir a tarefa para criação do docker image
     needs: build                  # execução do job docker somente após o build
