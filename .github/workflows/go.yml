@@ -56,3 +56,8 @@ jobs:
     needs: build                  # execução do job docker somente após o build
     uses: ./.github/workflows/Docker.yml              # acionamento da rotina do arquivo docker.yml
     secrets: inherit	                    # defini a utilização de secrets no arquivo Docker.yml
+
+  Deploy_ec2:                         # inserir a tarefa para criação do docker image
+    needs: build                  # execução do job docker somente após o build
+    uses: ./.github/workflows/cd_ec2.yml              # acionamento da rotina do arquivo docker.yml
+    secrets: inherit
