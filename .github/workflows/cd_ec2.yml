@@ -14,7 +14,6 @@ jobs:
       uses: actions/upload-artifact@v4.4.3
       with:
         name: programago       # informar qualquer nome relacionado a descrição da aplicação  
-        path: maingo
       
     - name: Deploy to Staging server             # step para conectar via ssh e realizar o deploy
       uses: easingthemes/ssh-deploy@main
