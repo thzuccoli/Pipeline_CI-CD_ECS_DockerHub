@@ -46,8 +46,8 @@ jobs:
     - name: Build
       run: go build -v main.go
 
-    - name: Upload a Build Artifact         # ação de salvar o arquivo compilado como artefato para passar pro job docker
-      uses: actions/upload-artifact@v4.4.3
+    - name: Download a Build Artifact         # ação de salvar o arquivo compilado 
+      uses: actions/download-artifact@v4.1.8
       with:
         name: programago       # informar qualquer nome relacionado a descrição da aplicação
         path: main              # iremos salvar o arquivo main
