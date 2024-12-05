@@ -10,4 +10,8 @@ ENV USER=root PASSWORD=root DBNAME=root
 # info que irão variar conforme acesso no banco de dados
 COPY ./main main
 
+RUN chmod +x main
+# comando para dar as permissões necessarias à aplicação main
+COPY ./templates templates/
+# comando para copiar os arquivos estaticos da aplicação (pasta templates para a pasta templates do container)
 CMD [ "./main" ]
