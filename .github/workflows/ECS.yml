@@ -10,8 +10,14 @@ jobs:
     steps:
     - uses: actions/checkout@v3      # arquivos estatico da nossa aplicação
 
-    - name: Download a Build Artifact         # ação de salvar o arquivo compilado 
-      uses: actions/download-artifact@v4.1.8
+    - name: Configurando credenciais da AWS               #step para configuração da access key para loguin na AWS
+      uses: aws-actions/configure-aws-credentials@v1
       with:
-        name: programago       # informar qualquer nome relacionado a descrição da aplicação  
-      
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-2  
+
+    - name: obtendo arquivo da tarefa         # ação de obter o arquivo da tarefa
+      run: aws ecs describe-task-definition --task-definition TF-APIGo --query taskDefinition > task-definition.json
+      # TF-APIGo signifia a tarefa criada na console
+
