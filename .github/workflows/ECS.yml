@@ -1,0 +1,17 @@
+name: Deploy_ECS
+
+on:
+  workflow_call:            # execução na chamada da rotina go.yml
+ 
+jobs:
+
+  Deploy_ECS:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3      # arquivos estatico da nossa aplicação
+
+    - name: Download a Build Artifact         # ação de salvar o arquivo compilado 
+      uses: actions/download-artifact@v4.1.8
+      with:
+        name: programago       # informar qualquer nome relacionado a descrição da aplicação  
+      
