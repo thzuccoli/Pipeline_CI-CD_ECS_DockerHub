@@ -17,7 +17,33 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-2  
 
-    - name: obtendo arquivo da tarefa         # ação de obter o arquivo da tarefa
+    - name: obtendo arquivo da tarefa         # ação de obter o arquivo da tarefa com container
       run: aws ecs describe-task-definition --task-definition TF-APIGo --query taskDefinition > task-definition.json
       # TF-APIGo signifia a tarefa criada na console
 
+    - name: Inserir novo ID da imagem na tarefa do ECS           # trocar o ID da tarefa com container para deploy no ECS
+      id: task-def                                # ID atualizado da tarefa (container)
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: task-definition.json       # arquivo do step anterior
+        container-name: Go
+        image: thzuccoli/go_ci:latest
+        environment-variables: |            # variaveis de ambiente que precisam ser alterados no arquivo para conexão no banco
+          HOST=${{ secrets.DBHOST_RDS }}
+          USER=${{ secrets.DBUSER_RDS }} 
+          PASSWORD=${{ secrets.DBPASSWORD_RDS }}
+          DBNAME=${{ secrets.DBNAME_RDS }}
+          DBPORT=${{ secrets.DBPORT_RDS }}
+          PORT=8000
+
+    - name: Deploy Amazon ECS task definition        # deploy da definição de tarefa no ECS 
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+      with:
+        task-definition: ${{ steps.task-def.outputs.task-definition }}    # irá pegar a saida do o step anterior com o arquivo atualizado
+        service: SV-API-Go            # serviço criado na AWS
+        cluster: Cluster-Fargate_API-Go        # cluster criado na AWS
+        wait-for-service-stability: true      # boa pratica para aguardar se a subida do serviço ira ocorrer tudo certo
+
+
+          
+          
