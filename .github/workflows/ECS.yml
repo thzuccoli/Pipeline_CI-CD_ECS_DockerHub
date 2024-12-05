@@ -27,7 +27,7 @@ jobs:
       with:
         task-definition: task-definition.json       # arquivo do step anterior
         container-name: Go
-        image: thzuccoli/go_ci:latest
+        image: thzuccoli/go_ci:${{ github.run_number }}
         environment-variables: |            # variaveis de ambiente que precisam ser alterados no arquivo para conexão no banco
           HOST=${{ secrets.DBHOST_RDS }}
           USER=${{ secrets.DBUSER_RDS }} 
