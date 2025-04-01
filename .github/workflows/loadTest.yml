@@ -1,4 +1,4 @@
-name: Load Test
+  name: Load Test
 
 on:
   workflow_call:            # execução na chamada da rotina go.yml
@@ -16,3 +16,44 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-2  
+
+    - name: Git Clone Rep Infra
+      run: git clone https://github.com/thzuccoli/Infra_CI.git
+
+    - name: HashiCorp - Setup Terraform
+      uses: hashicorp/setup-terraform@v2.0.3
+
+    - run: terraform -chdir=Infra_CI/Infra_CI/env/Homolog init
+    # ação de informar o diretorio referente a pasta para inicializar o terraform -chdir=Infra_CI/Infra_CI
+
+    - run: terraform -chdir=Infra_CI/Infra_CI/env/Homolog destroy -auto-approve
+    
+    - run: terraform -chdir=Infra_CI/Infra_CI/env/Homolog apply -auto-approve 
+
+    - run: echo "$(terraform -chdir=Infra_CI/Infra_CI/env/Homolog output -raw IP_alb)"
+    # raw significa que a saida será em texto
+    
+    - name: Setup Python
+      uses: actions/setup-python@v5.5.0
+      with: 
+        python-version: 3.10
+
+    - name: Pip Python
+      uses: BSFishy/pip-action@v1
+      with:
+        packages: |
+          locust
+
+    # criação do arquivo de configuração do locust
+    - name: Arquivo de configuração locust
+      run: |
+        echo "from locust import HttpUser, TaskSet, task, between" >> locustfile.py
+        echo "" >> locustfile.py
+        echo "class UserTasks(TaskSet):" >> locustfile.py
+        echo "  @task(1)" >> locustfile.py
+        echo "  def index(self):" >> locustfile.py
+        echo "    self.client.get("/thiago")" >> locustfile.py
+        echo "" >> locustfile.py
+        echo "class WebsiteUser(HttpUser)" >> locustfile.py
+        echo "  tasks = [UserTasks]" >> locustfile.py
+        echo "  wait_time = between(1, 5)" >> locustfile.py
