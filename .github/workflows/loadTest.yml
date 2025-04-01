@@ -1,4 +1,4 @@
-  name: Load Test
+name: Load Test
 
 on:
   workflow_call:            # execução na chamada da rotina go.yml
